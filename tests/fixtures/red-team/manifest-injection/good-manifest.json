@@ -1,0 +1,17 @@
+{
+  "_note": "GOOD control — a benign npm packument with ordinary keywords + a real test/build script. Must NOT be flagged merely for having keywords or scripts; the false-positive trap for the manifest channel.",
+  "name": "date-fns-lite",
+  "readme": "Lightweight date formatting utilities.",
+  "versions": {
+    "3.4.0": {
+      "description": "Date formatting utilities.",
+      "keywords": ["date", "time", "format", "parse", "utility"],
+      "scripts": {
+        "test": "vitest run",
+        "build": "tsc",
+        "lint": "eslint ."
+      },
+      "author": { "name": "Jane Developer", "email": "jane@example.com" }
+    }
+  }
+}

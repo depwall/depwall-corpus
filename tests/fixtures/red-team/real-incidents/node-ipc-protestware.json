@@ -1,0 +1,13 @@
+{
+  "_incident": "node-ipc protestware (March 2022, 'peacenotwar')",
+  "_disclosure": "https://nvd.nist.gov/vuln/detail/CVE-2022-23812",
+  "_note": "Maintainer RIAEvangelist added malicious code directly into package source (geoIP-gated file wiper targeting Russian/Belarusian IPs), shipped via a new transitive dependency (peacenotwar module) that ran at runtime from index.js, not via a lifecycle install script. This is a KNOWN GAP: DepWall has no 'malicious runtime payload in package source' detector. The real attack shape — mature package, real registry entry, no install scripts — evades every current signal (no exfil-script pattern, no slopsquat/name mismatch, no provenance drop since npm attestations didn't exist as an ecosystem norm before 2023). Honest limitations: install-time gating is blind to package-source malice; detected only at import time. This fixture documents the detection gap, not a signal bug, consistent with the project's pattern of documenting uncontested limitations.",
+  "name": "node-ipc",
+  "version": "10.1.1",
+  "ageDays": 3000,
+  "weeklyDownloads": 50000,
+  "hasInstallScripts": false,
+  "installScriptBodies": [],
+  "maintainerCount": 1,
+  "deprecated": false
+}

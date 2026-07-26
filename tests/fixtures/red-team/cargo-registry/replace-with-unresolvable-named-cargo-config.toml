@@ -1,0 +1,6 @@
+# crates-io is source-replaced by a named source "corp" whose [source.corp]
+# definition lives in home config (not here). Same split-config boundary as the
+# [registry] default case: unresolvable → ASK naming "corp"; allowlist=corp →
+# bare-name hatch suppresses (ALLOW), symmetric with argv `--registry corp`.
+[source.crates-io]
+replace-with = "corp"

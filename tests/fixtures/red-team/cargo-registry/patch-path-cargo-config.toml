@@ -1,0 +1,5 @@
+# Round-6 Issue 2 (FP guard): a [patch] that points a crate at a LOCAL path is
+# the user overriding with their own code (the vendored/dev-checkout case) — no
+# off-registry fetch. Must stay ALLOW.
+[patch.crates-io]
+serde = { path = "../local-serde" }

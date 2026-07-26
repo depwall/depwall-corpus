@@ -1,0 +1,13 @@
+{
+  "_incident": "Slopsquatting — pre-registered exact hallucinated name that has AGED and accumulated downloads (react-codeshift shape)",
+  "_disclosure": "https://www.aikido.dev/blog/slopsquatting-ai-package-hallucination-attacks — `react-codeshift` is an LLM conflation of `jscodeshift` + `react-codemod`; agents executing hallucinated instructions kept downloading it daily (spread to 237 repos)",
+  "_note": "THE blind-spot fixture. Package exists (provenance silent), name is not a near-miss (slopsquat silent), and it is old + downloaded enough that maturity is silent — downloads are inflated by the hallucinating agents themselves, so adoption is NOT evidence of legitimacy. Without the hallucinated-name feed this record is ALLOW. On-feed + established => warn => ASK (human verifies; never silent-allow a documented hallucination target).",
+  "name": "react-codeshift",
+  "version": "2.3.1",
+  "ageDays": 400,
+  "weeklyDownloads": 30000,
+  "hasInstallScripts": false,
+  "installScriptBodies": [],
+  "maintainerCount": 1,
+  "deprecated": false
+}

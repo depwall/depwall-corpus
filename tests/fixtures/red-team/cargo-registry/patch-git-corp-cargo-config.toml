@@ -1,0 +1,5 @@
+# Round-6 Issue 2 (allowlist): a [patch] git source on a corp-mirror host must
+# be suppressible by DEPWALL_REGISTRY_ALLOWLIST=mirror.corp (host allowlist),
+# symmetric with every other redirect path.
+[patch.crates-io]
+serde = { git = "https://mirror.corp/serde" }

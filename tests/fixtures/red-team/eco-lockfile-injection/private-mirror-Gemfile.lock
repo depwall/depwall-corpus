@@ -1,0 +1,17 @@
+GEM
+  remote: https://gems.corp.example.com/
+  specs:
+    rack (3.0.9)
+    rake (13.1.0)
+    internal-widget (0.4.2)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  internal-widget
+  rack
+  rake
+
+BUNDLED WITH
+   2.5.9

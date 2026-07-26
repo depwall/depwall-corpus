@@ -1,0 +1,4 @@
+# replace-with points at a source that is never defined — the redirect target
+# is unknowable, so DepWall must fail CLOSED (ASK), not silently allow.
+[source.crates-io]
+replace-with = "ghost"

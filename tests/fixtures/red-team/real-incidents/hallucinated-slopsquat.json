@@ -1,0 +1,14 @@
+{
+  "_incident": "AI slopsquatting — hallucinated package name (2024-2025 research)",
+  "_disclosure": "https://arxiv.org/abs/2406.10279 (package hallucination in code-gen LLMs); Socket/Lasso 'slopsquatting' coverage",
+  "_note": "LLMs frequently invent plausible-but-nonexistent dependency names; attackers pre-register them. Modelled as a package that is NOT in the registry (notFound), so the deterministic provenance signal fires critical. The name is also edit-distance 1 from popular `electron`, so slopsquat fires too — both point at the same real threat (a hallucinated near-miss of a real package). The test asserts provenance is present (contains), not that it is the only signal. This is DepWall's headline threat class.",
+  "name": "electronn",
+  "version": "1.0.0",
+  "ageDays": null,
+  "weeklyDownloads": null,
+  "hasInstallScripts": false,
+  "installScriptBodies": [],
+  "maintainerCount": null,
+  "deprecated": false,
+  "notFound": true
+}

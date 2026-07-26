@@ -1,0 +1,8 @@
+# Verbatim `cargo vendor` output — the single biggest false-positive trap.
+# replace-with points at a LOCAL directory source, not a remote registry, so
+# nothing is fetched off-registry. Must stay ALLOW.
+[source.crates-io]
+replace-with = "vendored-sources"
+
+[source.vendored-sources]
+directory = "vendor"

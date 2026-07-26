@@ -1,0 +1,17 @@
+# Ordinary developer .cargo/config.toml — proxy, transport, build tuning, an
+# alias, and the sparse-protocol opt-in for the DEFAULT registry. None of these
+# redirect the crate source. Must stay ALLOW.
+[build]
+jobs = 4
+
+[http]
+proxy = "http://proxy.corp:8080"
+
+[net]
+git-fetch-with-cli = true
+
+[registries.crates-io]
+protocol = "sparse"
+
+[alias]
+b = "build"

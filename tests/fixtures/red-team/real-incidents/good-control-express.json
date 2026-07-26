@@ -1,0 +1,12 @@
+{
+  "_incident": "GOOD control — a real, popular, mature package",
+  "_note": "Not an incident. Present so the corpus test proves the signals discriminate: an established package with healthy adoption and no install scripts must be ALLOW (zero findings). If this ever trips, the corpus is over-blocking and the result is meaningless.",
+  "name": "express",
+  "version": "4.18.2",
+  "ageDays": 4000,
+  "weeklyDownloads": 30000000,
+  "hasInstallScripts": false,
+  "installScriptBodies": [],
+  "maintainerCount": 12,
+  "deprecated": false
+}

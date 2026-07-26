@@ -1,0 +1,13 @@
+{
+  "_incident": "brand-jacking newcomer (generic pattern; cf. 2021-2024 dependency-confusion & impostor waves)",
+  "_disclosure": "https://medium.com/@alex.birsan/dependency-confusion-4a5d60fec610 (Birsan 2021)",
+  "_note": "A brand-new package with negligible adoption impersonating an established one is a classic pre-attack staging shape. No install-script and a valid-but-distinct name, so ONLY the maturity signal fires (warn -> ASK). This is the false-positive-adjacent case: it must ASK, not BLOCK, and must not be silently ALLOWed.",
+  "name": "internal-analytics-sdk",
+  "version": "0.0.1",
+  "ageDays": 2,
+  "weeklyDownloads": 4,
+  "hasInstallScripts": false,
+  "installScriptBodies": [],
+  "maintainerCount": 1,
+  "deprecated": false
+}

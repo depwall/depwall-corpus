@@ -1,0 +1,14 @@
+{
+  "_incident": "(control — package whose requested version IS provenance-attested)",
+  "_disclosure": "shape verified live against registry.npmjs.org/sigstore — dist.attestations { url, provenance: { predicateType: https://slsa.dev/provenance/v1 } }",
+  "_note": "Present + valid => info finding only (mild positive, explainability). Provenance verifies build ORIGIN, not behavior — it must never demote other findings or change the tier by itself. Tier stays ALLOW.",
+  "name": "attested-lib",
+  "version": "5.0.0",
+  "ageDays": 900,
+  "weeklyDownloads": 400000,
+  "hasInstallScripts": false,
+  "installScriptBodies": [],
+  "maintainerCount": 2,
+  "deprecated": false,
+  "attestations": { "current": true, "previous": [true, true, true] }
+}

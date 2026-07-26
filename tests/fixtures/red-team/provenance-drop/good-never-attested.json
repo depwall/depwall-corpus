@@ -1,0 +1,14 @@
+{
+  "_incident": "(control — mature popular package that has NEVER published provenance attestations)",
+  "_disclosure": "absence of dist.attestations is the npm norm (provenance adoption is a small minority of the registry)",
+  "_note": "False-positive trap: flagging absence alone would ASK effectively the whole registry and halt every developer. Never-attested => NO finding, tier ALLOW.",
+  "name": "steady-classic",
+  "version": "4.18.2",
+  "ageDays": 4000,
+  "weeklyDownloads": 30000000,
+  "hasInstallScripts": false,
+  "installScriptBodies": [],
+  "maintainerCount": 3,
+  "deprecated": false,
+  "attestations": { "current": false, "previous": [false, false, false] }
+}

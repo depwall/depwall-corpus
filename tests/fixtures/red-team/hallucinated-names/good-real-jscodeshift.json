@@ -1,0 +1,13 @@
+{
+  "_incident": "(control — one of the two real packages `react-codeshift` conflates)",
+  "_disclosure": "https://www.npmjs.com/package/jscodeshift",
+  "_note": "False-positive trap: superficially similar to feed entry `react-codeshift`. Exact-match feed must not fuzzy-flag it. Must stay ALLOW.",
+  "name": "jscodeshift",
+  "version": "17.1.2",
+  "ageDays": 3000,
+  "weeklyDownloads": 3000000,
+  "hasInstallScripts": false,
+  "installScriptBodies": [],
+  "maintainerCount": 2,
+  "deprecated": false
+}

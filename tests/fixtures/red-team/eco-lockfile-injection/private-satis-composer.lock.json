@@ -1,0 +1,22 @@
+{
+  "content-hash": "0000000000000000000000000000000000000000",
+  "packages": [
+    {
+      "name": "acme/core",
+      "version": "2.1.0",
+      "dist": { "type": "zip", "url": "https://satis.corp.example.com/dist/acme/core/2.1.0.zip", "reference": "aaa" }
+    },
+    {
+      "name": "acme/http",
+      "version": "1.0.4",
+      "dist": { "type": "zip", "url": "https://satis.corp.example.com/dist/acme/http/1.0.4.zip", "reference": "bbb" }
+    }
+  ],
+  "packages-dev": [
+    {
+      "name": "acme/testing",
+      "version": "3.0.0",
+      "dist": { "type": "zip", "url": "https://satis.corp.example.com/dist/acme/testing/3.0.0.zip", "reference": "ccc" }
+    }
+  ]
+}

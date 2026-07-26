@@ -1,0 +1,10 @@
+# Finding 3 (RC4): the STANDARD corporate sparse-registry setup (JFrog
+# Artifactory / CloudSmith / AWS CodeArtifact). `replace-with` names a
+# [registries.X] entry (NOT a [source.X]) whose `index` is the mirror. It must
+# resolve so the HOST allowlist applies: allowlist=mirror.corp → ALLOW; without
+# → ASK naming the host (never a nameless "unresolvable" nag).
+[source.crates-io]
+replace-with = "artifactory"
+
+[registries.artifactory]
+index = "sparse+https://mirror.corp/index/"

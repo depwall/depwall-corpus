@@ -1,0 +1,7 @@
+# Project config selects a named default registry "corp" whose [registries.corp]
+# index is NOT defined here — the legit corp split-config case, where the index
+# lives in ~/.cargo/config or CARGO_REGISTRIES_CORP_INDEX. Unresolvable from the
+# project file: without an allowlist DepWall must ASK (naming "corp"); with
+# DEPWALL_REGISTRY_ALLOWLIST=corp the bare-name hatch must suppress it (ALLOW).
+[registry]
+default = "corp"

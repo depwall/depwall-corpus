@@ -1,0 +1,14 @@
+{
+  "_incident": "Account-takeover / publish-pipeline compromise — provenance attestations DROP on the compromised version (ua-parser-js 2021 / event-stream 2018 shape, modern signature)",
+  "_disclosure": "https://www.cisa.gov/news-events/alerts/2021/10/22/malware-discovered-popular-npm-package-ua-parser-js — hijacked maintainer account published malicious versions of a mature, hugely popular package. A maintainer publishing via a provenance-attesting CI pipeline (npm publish --provenance, SLSA/Sigstore) cannot be impersonated by a stolen npm token alone: the attacker's publish LACKS dist.attestations.",
+  "_note": "Mature + popular, so maturity is silent; the name is the real one, so slopsquat/provenance(name) are silent. The tell is attestations.current=false while recent prior versions were attested. Expected: warn => ASK (a human must confirm a legit pipeline change), never silent-allow.",
+  "name": "popular-parser",
+  "version": "8.0.1",
+  "ageDays": 2000,
+  "weeklyDownloads": 8000000,
+  "hasInstallScripts": false,
+  "installScriptBodies": [],
+  "maintainerCount": 1,
+  "deprecated": false,
+  "attestations": { "current": false, "previous": [true, true, true] }
+}

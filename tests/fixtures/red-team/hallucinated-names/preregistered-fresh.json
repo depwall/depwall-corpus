@@ -1,0 +1,13 @@
+{
+  "_incident": "Slopsquatting — pre-registered exact hallucinated name, fresh registration (unused-imports, live malware as of Feb 2026)",
+  "_disclosure": "https://www.aikido.dev/blog/slopsquatting-ai-package-hallucination-attacks — LLMs hallucinate `unused-imports` for the real `eslint-plugin-unused-imports`; the name was registered as malware and pulls weekly downloads from agents",
+  "_note": "The package EXISTS (notFound absent), so the not-found provenance signal is silent; the name is nowhere near edit-distance 1 of the real package, so slopsquat is silent. Only the curated hallucinated-name feed catches the exact-name pre-registration. Fresh + on-feed => critical => BLOCK.",
+  "name": "unused-imports",
+  "version": "1.0.0",
+  "ageDays": 10,
+  "weeklyDownloads": 233,
+  "hasInstallScripts": false,
+  "installScriptBodies": [],
+  "maintainerCount": 1,
+  "deprecated": false
+}

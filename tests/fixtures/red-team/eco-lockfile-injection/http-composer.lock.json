@@ -1,0 +1,15 @@
+{
+  "content-hash": "0000000000000000000000000000000000000000",
+  "packages": [
+    {
+      "name": "guzzlehttp/guzzle",
+      "version": "7.8.1",
+      "dist": {
+        "type": "zip",
+        "url": "http://api.github.com/repos/guzzle/guzzle/zipball/41042bc7ab002487b876a0683fc8dce04ddce104",
+        "reference": "41042bc7ab002487b876a0683fc8dce04ddce104"
+      }
+    }
+  ],
+  "packages-dev": []
+}

