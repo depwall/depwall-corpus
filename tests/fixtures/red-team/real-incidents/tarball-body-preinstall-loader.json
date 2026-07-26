@@ -1,0 +1,15 @@
+{
+  "_incident": "npm preinstall loader whose payload lives in the tarball (000webhost-admin@999.9.9, discovered 2024-12-14)",
+  "_disclosure": "https://github.com/DataDog/malicious-software-packages-dataset (samples/npm/malicious_intent/000webhost-admin/999.9.9)",
+  "_note": "The dominant npm malicious-intent shape in the public corpus: a throwaway package whose only manifest tell is `preinstall: node index.js`. The registry metadata DepWall reads is CLEAN of exfil patterns — the payload is inside index.js in the tarball, which the npm path never fetches. Verdict is therefore ASK (lifecycle script present + new/low-adoption), never BLOCK. This is the npm analogue of the pip/cargo build-script body scan: same attack, one ecosystem has the body, the other does not. KNOWN GAP — see notes.md. Metadata reproduced verbatim except the publisher identity, which is redacted.",
+  "name": "000webhost-admin",
+  "version": "999.9.9",
+  "ageDays": 0,
+  "weeklyDownloads": 0,
+  "hasInstallScripts": true,
+  "installScriptBodies": [
+    "node index.js"
+  ],
+  "maintainerCount": 1,
+  "deprecated": false
+}

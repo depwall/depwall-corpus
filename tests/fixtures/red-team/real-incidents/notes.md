@@ -15,6 +15,7 @@ No real package is installed or run; any exfil payload is replaced with an inert
 | `ua-parser-js-hijack.json` | ua-parser-js account compromise (Oct 2021, CISA) | `install-scripts` (cryptominer downloader, despite millions/week maturity) | BLOCK |
 | `brandjack-newcomer.json` | dependency-confusion / brand-jack (Birsan 2021) | `maturity` only (new + low adoption) | ASK |
 | `node-ipc-protestware.json` | node-ipc protestware (March 2022, 'peacenotwar') | **KNOWN GAP — zero signals** | ALLOW |
+| `tarball-body-preinstall-loader.json` | `000webhost-admin@999.9.9` (Dec 2024, DataDog corpus) | `install-scripts` (presence only) + `maturity` | ASK — **KNOWN GAP: tarball body unread** |
 | `good-control-express.json` | (control — real popular package) | none | ALLOW |
 
 Sources are cited in each fixture's `_disclosure` field.
@@ -33,6 +34,18 @@ This mirrors the lockfile "uniform-total-poison" known limitation:
 install-time gating is blind to package-source malice.
 Mitigation roadmap: deeper pip/cargo/go analysis (setup.py/build-script
 bodies), and runtime-phase defenses (not DepWall's scope).
+
+**Known gap: `tarball-body-preinstall-loader.json`** is the same gap on the
+common path rather than an exotic one. It is the dominant npm malicious-intent
+shape in the public corpus: `preinstall: node index.js`, with clean registry
+metadata and the payload inside the tarball. pip and cargo get their build-script
+bodies fetched in the gray zone (`deepProvenanceVerdict` → `fetchBodies`); npm
+does not fetch its tarball, so the verdict tops out at ASK. Gating still happens
+— nothing installs silently — but the BLOCK is what an npm body scan would buy.
+Confirmed over the npm half of the public corpus: nearly every sample reached
+ASK, almost none reached BLOCK, and the handful that were allowed outright were
+the runtime-payload class above. Counts are in the engine repo's corpus-eval
+report.
 
 Regression test: tests/signals/real-incidents.test.ts
 
