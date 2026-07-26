@@ -29,21 +29,24 @@ the environment, or credential paths — while 138 are markdown-only, where the
 judge is the right instrument. `bad-skill-bundled-payload/` pins the gap; the
 full measurement is recorded in the engine repo's corpus-eval report.
 
-**Known gap: the judge prompt is written for PACKAGES, and a skill is not a
-package.** Scored against the public corpus's malicious skills it carries the
-class — most were flagged, and injection was the dominant reason. Scored against
-a set of real installed *benign* skills it also flagged a large share of them,
-because the thing it looks for — content instructing an agent to change its
-behavior — is what a legitimate style or process skill *is*. Two recurring
-causes: imperative persistence language ("ACTIVE EVERY RESPONSE", "YOU MUST",
-"not negotiable"), and Claude Code's own `` !`bash …` `` directive, read as
-command injection. The same judge on the same model left popular npm packages
-essentially untouched, so this is the package prompt applied to an artifact type
-it was not written for, not a miscalibrated model. Closing it needs a
-skill-specific prompt that separates declared in-scope behavior from covert
-redirection (exfil endpoints, credential paths, "do not tell the user",
-instructions unrelated to the stated purpose).
-`good-skill-persistent-behavior/` is the target fixture; counts are in the
-engine repo's corpus-eval report.
+**Skills are judged with their own prompt.** A skill file exists to instruct an
+agent, so the package prompt — whose question is whether content is trying to
+instruct an agent — flagged legitimate skills for existing. Measured against a
+set of real installed benign skills, it blocked a substantial number of them:
+imperative persistence language ("ACTIVE EVERY RESPONSE", "YOU MUST", "not
+negotiable") and Claude Code's own `` !`bash …` `` directive both read as attacks.
+The same judge left popular npm packages essentially untouched, so the model was
+fine and the question was wrong.
+
+`JudgeInput.kind` now routes skills to `SKILL_SYSTEM_PROMPT`, which treats
+directive tone and in-bundle script loading as normal and reports only
+instructions to do something the skill does not openly claim: concealment from
+the user, credential theft, external exfiltration, remote code from outside the
+bundle, scope mismatch against the declared description, sabotage of security
+tooling, and obfuscated payloads. Scored A/B over identical inputs it blocks no
+benign skill in the control set while blocking slightly more of the corpus's
+malicious ones; the cost is a smaller ASK band. `good-skill-persistent-behavior/`
+is the fixture that pins the benign side. Counts are in the engine repo's
+corpus-eval report.
 
 Regression test: tests/mcp/agent-artifacts-corpus.test.ts

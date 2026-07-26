@@ -6,7 +6,8 @@ DepWall is a security tool, so "it failed to catch X" is a security report, not
 a feature request.
 
 Use **GitHub private vulnerability reporting** on this repository
-(Security → Report a vulnerability) for anything that should not be public yet:
+(Security → Report a vulnerability), or email **security@depwall.com** if you
+would rather not use GitHub, for anything that should not be public yet:
 
 - an attack shape that evades DepWall and is **not** already listed under
   *Known gaps* in [docs/EVIDENCE.md](docs/EVIDENCE.md);
