@@ -16,6 +16,10 @@ No real package is installed or run; any exfil payload is replaced with an inert
 | `brandjack-newcomer.json` | dependency-confusion / brand-jack (Birsan 2021) | `maturity` only (new + low adoption) | ASK |
 | `node-ipc-protestware.json` | node-ipc protestware (March 2022, 'peacenotwar') | **KNOWN GAP — zero signals** | ALLOW |
 | `tarball-body-preinstall-loader.json` | `000webhost-admin@999.9.9` (Dec 2024, DataDog corpus) | `install-scripts` (presence only) + `maturity` | ASK — **KNOWN GAP: tarball body unread** |
+| `mini-shai-hulud-optional-git-dep.json` | Mini Shai-Hulud (TeamPCP, May 2026) — npm delivery vector | `remote-dep` (optional dep → forge orphan commit, `prepare` runs at install) | ASK |
+| `mini-shai-hulud-runner-token-theft.json` | Mini Shai-Hulud — CI OIDC token theft stage | `install-scripts` (`/proc/self/mem` + `ACTIONS_ID_TOKEN_REQUEST_*`) | BLOCK |
+| `mini-shai-hulud-wiper.json` | Mini Shai-Hulud — dead-man switch + agent-config persistence | `install-scripts` (home-dir wipe, critical; `.claude/` write, warn) | BLOCK |
+| `good-control-optional-platform-dep.json` | (control — per-platform `optionalDependencies` as semver) | none | ALLOW |
 | `good-control-express.json` | (control — real popular package) | none | ALLOW |
 
 Sources are cited in each fixture's `_disclosure` field.
@@ -46,6 +50,23 @@ Confirmed over the npm half of the public corpus: nearly every sample reached
 ASK, almost none reached BLOCK, and the handful that were allowed outright were
 the runtime-payload class above. Counts are in the engine repo's corpus-eval
 report.
+
+**Known limitation: Mini Shai-Hulud carried VALID SLSA provenance.** The
+malicious versions were signed by a real Sigstore certificate issued to the
+victim's own CI identity, so the attestation-DROP detection is blind to this
+class — there is no drop to see. `attestationSignal` stays `info` for a present
+attestation for exactly this reason, and
+`real-incidents.test.ts` pins that: provenance must never become credit that
+offsets a finding.
+
+**Residuals on the `remote-dep` signal.** It reads the dep blocks of the
+*published package* (registry packument). Two neighbours are deliberately left
+alone: (1) `prepare` is still not treated as a lifecycle install script for a
+registry tarball — npm does not run it there, and flagging it would ASK on
+`prepare: husky install` across half the ecosystem; (2) a forge-hosted git dep
+in the *user's own* `package.json` remains suppressed as a pinned fork
+(`directSourceFindings`). Fetching the git dep's own manifest at the pinned ref
+is the precise fix and is deferred.
 
 Regression test: tests/signals/real-incidents.test.ts
 

@@ -1,7 +1,7 @@
 # DepWall — Red-Team Corpus
 
 The public regression corpus behind [DepWall](https://depwall.com),
-a dependency-provenance firewall for AI coding agents.
+an install-time guardrail and dependency-provenance firewall for AI coding agents.
 
 **[→ Read the detection evidence](docs/EVIDENCE.md)**
 

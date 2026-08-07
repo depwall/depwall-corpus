@@ -1,0 +1,13 @@
+{
+  "_incident": "GOOD control — the false-positive trap for the remote-dep signal",
+  "_note": "Not an incident. The dominant legitimate use of optionalDependencies: per-platform prebuilt binaries, declared as ordinary semver registry ranges (esbuild/rollup/swc all ship this shape). It must stay ALLOW with zero findings. If this ever trips, the remote-dep signal is matching dep PRESENCE rather than a git/URL SOURCE, and every modern bundler would ASK.",
+  "name": "redacted-bundler",
+  "version": "0.25.0",
+  "ageDays": 900,
+  "weeklyDownloads": 48000000,
+  "hasInstallScripts": false,
+  "installScriptBodies": [],
+  "maintainerCount": 4,
+  "deprecated": false,
+  "remoteDeps": []
+}

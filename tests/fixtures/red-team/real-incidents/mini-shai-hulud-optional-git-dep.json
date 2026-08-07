@@ -1,0 +1,21 @@
+{
+  "_incident": "Mini Shai-Hulud (TeamPCP), npm/PyPI worm, 2026-05-11",
+  "_disclosure": "https://thehackernews.com/2026/05/mini-shai-hulud-worm-compromises.html",
+  "_note": "The npm delivery vector, shape-only. The compromised version added an optionalDependencies entry resolving to an ORPHAN COMMIT in the project's own GitHub repo, introducing a package whose `prepare` lifecycle hook runs at install. Optional makes a failed fetch silent; the forge host is the project's own, so host-tier provenance suppresses it as a 'pinned fork'. Repo/ref REDACTED to example.invalid — nothing here is fetchable. No install script on the parent: the whole point is that the parent manifest looks clean.",
+  "name": "@redacted-scope/router",
+  "version": "1.132.7",
+  "ageDays": 1,
+  "weeklyDownloads": 12700000,
+  "hasInstallScripts": false,
+  "installScriptBodies": [],
+  "maintainerCount": 3,
+  "deprecated": false,
+  "attestations": { "current": true, "previous": [true, true, true] },
+  "remoteDeps": [
+    {
+      "name": "@redacted-scope/setup",
+      "spec": "github:REDACTED-owner/REDACTED-repo#0000000000000000000000000000000000000000",
+      "optional": true
+    }
+  ]
+}

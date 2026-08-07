@@ -1,0 +1,6 @@
+{
+  "name": "inert-fixture-benign-directory-main",
+  "private": true,
+  "type": "commonjs",
+  "main": "./install.js"
+}

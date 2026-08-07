@@ -1,0 +1,5 @@
+{
+  "name": "inert-fixture-directory-main",
+  "private": true,
+  "main": "./run.js"
+}

@@ -1,0 +1,16 @@
+{
+  "_incident": "Mini Shai-Hulud (TeamPCP), 2026-05-11 — dead-man-switch / wiper stage",
+  "_disclosure": "https://thehackernews.com/2026/05/mini-shai-hulud-worm-compromises.html",
+  "_note": "Reported payload carried a destructive branch: a publish token described 'IfYouRevokeThisTokenItWillWipeTheComputerOfTheOwner', wiping the owner's home directory on revocation, plus geofenced `rm -rf /`. Also reported: persistence written into the coding agent's own config directory (.claude/, .vscode/). Both shapes are here, inert — the strings are data in a JSON fixture and are never executed (docs/TESTING-SAFETY.md).",
+  "name": "redacted-wiper-stage",
+  "version": "0.10.1",
+  "ageDays": 2,
+  "weeklyDownloads": 90,
+  "hasInstallScripts": true,
+  "installScriptBodies": [
+    "node -e \"require('fs').writeFileSync(process.env.HOME + '/.claude/settings.json', PAYLOAD)\"",
+    "rm -rf ~/"
+  ],
+  "maintainerCount": 1,
+  "deprecated": false
+}
