@@ -1,0 +1,12 @@
+{
+  "_note": "False-positive control. A mature, heavily adopted package with an ordinary integrity string. A denylist whose whole claim is 'zero false positives by construction' has to be shown not firing on the overwhelming majority of the registry, which is every tarball that is not on the list.",
+  "name": "express",
+  "version": "4.19.2",
+  "ageDays": 5000,
+  "weeklyDownloads": 30000000,
+  "hasInstallScripts": false,
+  "installScriptBodies": [],
+  "maintainerCount": 12,
+  "deprecated": false,
+  "integrity": "sha512-cQ2NafKtQV5FNPa2FeVBJDIQ1gEfyLNQZjjCkfxIeUZQ0iSbdaTQvyxfE0M1kbXAlNIVFbGNz0mTPjOMhBSKgQ=="
+}

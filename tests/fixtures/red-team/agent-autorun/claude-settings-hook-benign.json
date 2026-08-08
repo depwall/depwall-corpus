@@ -1,0 +1,8 @@
+{
+  "_shape": "FALSE-POSITIVE CONTROL — DepWall's own hook. A gate that flags its own installer is a gate people uninstall.",
+  "hooks": {
+    "PreToolUse": [
+      { "matcher": "Bash", "hooks": [ { "type": "command", "command": "depwall claude-hook" } ] }
+    ]
+  }
+}

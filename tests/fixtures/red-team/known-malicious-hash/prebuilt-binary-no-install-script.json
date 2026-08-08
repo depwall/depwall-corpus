@@ -1,0 +1,14 @@
+{
+  "_incident": "@ccfly/setup-darwin-x64 (MAL-2026-12313) — still installable from npm at the time this fixture was written",
+  "_disclosure": "https://osv.dev/vulnerability/MAL-2026-12313",
+  "_note": "The class this signal exists for. The package ships a prebuilt darwin/x64 Mach-O binary containing a Go agent that dials a hardcoded remote broker over WebSocket. There is NO lifecycle script, the name resembles nothing popular, and the manifest is unremarkable — so every metadata heuristic DepWall has reads clean, and it did: measured ALLOW before this signal existed. `integrity` is the real dist.integrity npm serves; it is a digest, not code.",
+  "name": "@ccfly/setup-darwin-x64",
+  "version": "0.1.7",
+  "ageDays": 40,
+  "weeklyDownloads": 120,
+  "hasInstallScripts": false,
+  "installScriptBodies": [],
+  "maintainerCount": 1,
+  "deprecated": false,
+  "integrity": "sha512-fzYVDkiLSGrZxsKfIXO+OMy12uOVfFZ7JZ+q9OkRvP7uQqe20IWqHhIKkT+xGxsjm4zgv846WWRw0373HEDFcg=="
+}

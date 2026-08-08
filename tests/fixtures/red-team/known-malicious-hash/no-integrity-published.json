@@ -1,0 +1,11 @@
+{
+  "_note": "Absence control. Packages published before npm emitted `dist.integrity` carry only `dist.shasum`, and a registry mirror may omit the field entirely. The signal must stay SILENT here rather than treat 'nothing to compare' as 'compared and clean' — the other signals still get their say, and this record is otherwise old and unremarkable so it would read ALLOW on its own.",
+  "name": "legacy-utility",
+  "version": "0.3.1",
+  "ageDays": 3800,
+  "weeklyDownloads": 4200,
+  "hasInstallScripts": false,
+  "installScriptBodies": [],
+  "maintainerCount": 2,
+  "deprecated": false
+}

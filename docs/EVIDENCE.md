@@ -18,7 +18,7 @@ An attack shape the engine does not catch is listed below as a **documented gap*
 
 Each fixture below is inert, redacted metadata. Most are modelled on a publicly documented supply-chain incident; the set also includes a generic attack pattern and a benign control, both labelled as such in the table. When this page is generated, every fixture is loaded, its documentation fields stripped, and run through the **real signals engine** — the verdicts here are recomputed, not transcribed.
 
-**9 of 10** documented malicious incident shapes are gated — 6 BLOCK, 3 ASK — and 1 is a documented miss. **2 of 2** benign controls correctly allowed.
+**10 of 11** documented malicious incident shapes are gated — 7 BLOCK, 3 ASK — and 1 is a documented miss. **2 of 2** benign controls correctly allowed.
 
 *Gated* means the install was stopped or held for a human (BLOCK or ASK), not silently allowed. An ASK is not a clean detection — it is DepWall refusing to decide on its own, and on a small set like this it can be driven by a single broad signal such as package immaturity.
 
@@ -30,6 +30,7 @@ Each fixture below is inert, redacted metadata. Most are modelled on a publicly 
 | GOOD control — a real, popular, mature package | `good-control-express.json` | ALLOW | none | control allowed | — |
 | GOOD control — the false-positive trap for the remote-dep signal | `good-control-optional-platform-dep.json` | ALLOW | none | control allowed | — |
 | AI slopsquatting — hallucinated package name (2024-2025 research) | `hallucinated-slopsquat.json` | BLOCK | `maturity`, `provenance`, `slopsquat` | detected | [source](https://arxiv.org/abs/2406.10279) package hallucination in code-gen LLMs; Socket/Lasso 'slopsquatting' coverage |
+| keyv/cacheable maintainer compromise (Aug 2026) — malicious release carrying valid npm provenance | `keyv-provenance-signed-compromise.json` | BLOCK | `attestation`, `install-scripts`, `known-malicious` | detected | [source](https://osv.dev/vulnerability/MAL-2026-11524) |
 | Mini Shai-Hulud (TeamPCP), npm/PyPI worm, 2026-05-11 | `mini-shai-hulud-optional-git-dep.json` | ASK | `attestation`, `remote-dep` | detected | [source](https://thehackernews.com/2026/05/mini-shai-hulud-worm-compromises.html) |
 | Mini Shai-Hulud (TeamPCP), npm/PyPI worm, 2026-05-11 — CI credential-theft stage | `mini-shai-hulud-runner-token-theft.json` | BLOCK | `install-scripts`, `maturity` | detected | [source](https://thehackernews.com/2026/05/mini-shai-hulud-worm-compromises.html) |
 | Mini Shai-Hulud (TeamPCP), 2026-05-11 — dead-man-switch / wiper stage | `mini-shai-hulud-wiper.json` | BLOCK | `install-scripts` | detected | [source](https://thehackernews.com/2026/05/mini-shai-hulud-worm-compromises.html) |
@@ -53,6 +54,10 @@ Marked in the corpus itself:
 - `agent-artifacts`: Known gap: true MCP tool-poisoning lives in a live server's `tools/list` metadata, reachable only by connecting to it — out of scope by design.
 - `build-scripts`: Known gap: deferred install hook. A `setup.py` whose `cmdclass` install override imports a module from its own package and calls it moves the payload one file away from the scanner, exactly as npm's `preinstall: node index.js` does. Nothing in the `setup.py` is hostile, and legitimate packages run post-install steps the same way, so no pattern here can separate them; closing it means following the import. Pinned by `gap-deferred-cmdclass-setup-py/`.
 - `build-scripts`: Known gaps (documented, deliberate): PEP 517 backend hooks outside setup.py; obfuscation beyond these patterns is the judge's job (it sees the full body); deterministically-ALLOW packages (mature+popular) are never tarball-scanned.
+- `known-malicious-hash`: Known gap: coverage is small and version-exact. The list holds ~4,000 tarballs out of the ~219,000 malicious npm advisories OSV carries, because most advisories publish no hash. It also pins one version — OSV routinely names ten malicious versions of a package and supplies a digest for one of them, and the other nine are not covered here. Absence from this list is not evidence of anything, which is why the signal is escalate-only and every other signal still runs.
+- `known-malicious-hash`: Known gap: a freshly compromised tarball has no hash yet. The list is baked into the release and refreshed on a schedule, so a package poisoned after the last sync is not on it, and neither is one nobody has reported. This signal is a floor under the heuristics, never a replacement for them.
+- `known-malicious-hash`: Known gap: republishing evades it completely. Change one byte, get a new digest, and the list no longer matches. This is not a weakness to be fixed — it is what "exact" means, and it is the same trade that buys the zero false-positive rate. The heuristics are what have to catch the recompiled version, which is why this signal is additive and nothing was relaxed to make room for it.
+- `known-malicious-hash`: Known gap: it trusts the registry it is talking to. `dist.integrity` comes from whatever endpoint answered. A mirror under an attacker's control can omit the field or report a digest for bytes it does not serve, and the signal goes quiet. An attacker with that position has already won larger fights than this one, so the response is to say so rather than to pretend otherwise.
 - `real-incidents`: Known gap: `node-ipc-protestware.json` documents a detection blind spot. The real attack (malicious code injected directly into package source, running at runtime via `index.js`, not via lifecycle scripts) escapes all current signals — no install-script pattern, real registry entry, mature package, no provenance drop (npm attestations didn't exist as ecosystem norm in 2022). This mirrors the lockfile "uniform-total-poison" known limitation: install-time gating is blind to package-source malice. Mitigation roadmap: deeper pip/cargo/go analysis (setup.py/build-script bodies), and runtime-phase defenses (not DepWall's scope).
 - `real-incidents`: Known gap: `tarball-body-preinstall-loader.json` is the same gap on the common path rather than an exotic one. It is the dominant npm malicious-intent shape in the public corpus: `preinstall: node index.js`, with clean registry metadata and the payload inside the tarball. pip and cargo get their build-script bodies fetched in the gray zone (`deepProvenanceVerdict` → `fetchBodies`); npm does not fetch its tarball, so the verdict tops out at ASK. Gating still happens — nothing installs silently — but the BLOCK is what an npm body scan would buy. Confirmed over the npm half of the public corpus: nearly every sample reached ASK, almost none reached BLOCK, and the handful that were allowed outright were the runtime-payload class above. Counts are in the engine repo's corpus-eval report.
 - `remote-exec`: Known gap: `curl` has no PATH shim — pipe-to-shell is enforced in the Claude agent hook, not in a human shell.
@@ -64,6 +69,7 @@ Every attack class with a regression fixture in this repository.
 | Attack class | Fixtures | Notes |
 |---|---|---|
 | `agent-artifacts` | 24 | [notes](../tests/fixtures/red-team/agent-artifacts/notes.md) |
+| `agent-autorun` | 4 | [notes](../tests/fixtures/red-team/agent-autorun/notes.md) |
 | `brew-bundled-cli` | 1 | [notes](../tests/fixtures/red-team/brew-bundled-cli/notes.md) |
 | `build-scripts` | 29 | [notes](../tests/fixtures/red-team/build-scripts/notes.md) |
 | `cargo-registry` | 22 | [notes](../tests/fixtures/red-team/cargo-registry/notes.md) |
@@ -71,12 +77,13 @@ Every attack class with a regression fixture in this repository.
 | `env-redirect` | 1 | [notes](../tests/fixtures/red-team/env-redirect/notes.md) |
 | `hallucinated-names` | 4 | [notes](../tests/fixtures/red-team/hallucinated-names/notes.md) |
 | `index-redirect` | 1 | [notes](../tests/fixtures/red-team/index-redirect/notes.md) |
+| `known-malicious-hash` | 4 | [notes](../tests/fixtures/red-team/known-malicious-hash/notes.md) |
 | `lockfile-injection` | 5 | [notes](../tests/fixtures/red-team/lockfile-injection/notes.md) |
 | `manifest-injection` | 4 | [notes](../tests/fixtures/red-team/manifest-injection/notes.md) |
 | `npm-registry` | 1 | [notes](../tests/fixtures/red-team/npm-registry/notes.md) |
 | `provenance-drop` | 3 | [notes](../tests/fixtures/red-team/provenance-drop/notes.md) |
 | `readme-injection` | 1 | [notes](../tests/fixtures/red-team/readme-injection/notes.md) |
-| `real-incidents` | 12 | [notes](../tests/fixtures/red-team/real-incidents/notes.md) |
+| `real-incidents` | 13 | [notes](../tests/fixtures/red-team/real-incidents/notes.md) |
 | `remote-exec` | 1 | [notes](../tests/fixtures/red-team/remote-exec/notes.md) |
 | `url-confusion` | 1 | [notes](../tests/fixtures/red-team/url-confusion/notes.md) |
 

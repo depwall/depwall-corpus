@@ -1,0 +1,12 @@
+{
+  "_note": "Evasion attempt against a naive implementation. Subresource Integrity allows several space-separated digests in one field, so an equality test on the whole string ('sha512-BAD== sha256-anything' !== 'sha512-BAD==') would miss a tarball that is on the list. npm publishes a single sha512 today, which is exactly why this would go unnoticed until the day it did not. The known-bad token is second, so an implementation that only inspects the first also fails.",
+  "name": "sri-list-evasion",
+  "version": "1.0.0",
+  "ageDays": 900,
+  "weeklyDownloads": 50000,
+  "hasInstallScripts": false,
+  "installScriptBodies": [],
+  "maintainerCount": 3,
+  "deprecated": false,
+  "integrity": "sha256-ZmFrZUhhc2hUaGF0SXNOb3RPblRoZURlbnlsaXN0QUFBQUFBQUE= sha512-fzYVDkiLSGrZxsKfIXO+OMy12uOVfFZ7JZ+q9OkRvP7uQqe20IWqHhIKkT+xGxsjm4zgv846WWRw0373HEDFcg=="
+}

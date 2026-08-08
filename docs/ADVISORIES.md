@@ -8,6 +8,7 @@ These are documents. DepWall's client does not read this feed, and no advisory h
 
 | ID | Disclosed | Severity | Class | Incident | DepWall |
 |---|---|---|---|---|---|
+| [DW-2026-0009](#dw-2026-0009) | 2026-08-04 | CRITICAL | Attested build, poisoned source | keyv/cacheable maintainer compromise (Aug 2026) — malicious release carrying valid npm provenance | **BLOCK** |
 | [DW-2026-0005](#dw-2026-0005) | 2026-06-09 | CRITICAL | Worm | Mini Shai-Hulud (TeamPCP), 2026-05-11 — dead-man-switch / wiper stage | **BLOCK** |
 | [DW-2026-0006](#dw-2026-0006) | 2026-06-09 | CRITICAL | Worm | Mini Shai-Hulud (TeamPCP), npm/PyPI worm, 2026-05-11 — CI credential-theft stage | **BLOCK** |
 | [DW-2026-0007](#dw-2026-0007) | 2026-06-09 | CRITICAL | Worm | Mini Shai-Hulud (TeamPCP), npm/PyPI worm, 2026-05-11 | **ASK** |
@@ -16,6 +17,19 @@ These are documents. DepWall's client does not read this feed, and no advisory h
 | [DW-2026-0001](#dw-2026-0001) | 2021-10-22 | CRITICAL | Account takeover | ua-parser-js account compromise (Oct 2021, CISA alert) | **BLOCK** |
 | [DW-2026-0002](#dw-2026-0002) | 2018-11-26 | CRITICAL | Dependency takeover | event-stream / flatmap-stream (Nov 2018) | **BLOCK** |
 | [DW-2026-0004](#dw-2026-0004) | 2017-08-01 | HIGH | Typosquat | crossenv / cross-env typosquat wave (Aug 2017) | **BLOCK** |
+
+## DW-2026-0009
+
+**keyv/cacheable maintainer compromise (Aug 2026) — malicious release carrying valid npm provenance**
+
+- **Disclosed:** 2026-08-04
+- **Severity:** CRITICAL
+- **Class:** Attested build, poisoned source
+- **Reference:** https://osv.dev/vulnerability/MAL-2026-11524
+
+DepWall returns **BLOCK** on `attestation`, `install-scripts`, `known-malicious`.
+
+Regression fixture: `keyv-provenance-signed-compromise.json`
 
 ## DW-2026-0005
 

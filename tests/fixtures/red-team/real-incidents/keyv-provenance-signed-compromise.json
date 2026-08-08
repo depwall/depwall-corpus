@@ -1,0 +1,17 @@
+{
+  "_incident": "keyv/cacheable maintainer compromise (Aug 2026) — malicious release carrying valid npm provenance",
+  "_disclosure": "https://osv.dev/vulnerability/MAL-2026-11524",
+  "_note": "A maintainer account behind the keyv and cacheable families was compromised. The attacker pushed the payload to the SOURCE REPOSITORY and cut releases through the project's own GitHub Actions workflow, so the poisoned tarballs reached npm with a valid, signed provenance attestation — provenance attests how a build ran, not that the source was honest. This is the fixture's whole point: attestationSignal sees `current: true` and correctly says nothing, and the package is malicious anyway. Delivery was the install lifecycle (`preinstall: node setup.mjs`), which fetched a standalone Bun runtime and ran a second stage; the compiled output was left working so the package behaved normally after install. `integrity` is the real dist.integrity npm served for the trojanized tarball, and is what known-malicious matches — it is a digest, not code, so nothing here is executable. No payload is reproduced.",
+  "name": "keyv",
+  "version": "6.0.0",
+  "ageDays": 0,
+  "weeklyDownloads": 96000000,
+  "hasInstallScripts": true,
+  "installScriptBodies": [
+    "node setup.mjs"
+  ],
+  "maintainerCount": 1,
+  "deprecated": false,
+  "integrity": "sha512-N/n4R+nD5SC0fYOpAp4ZnbwwxqGVodgEZ9D7Gm/VBocorU0aQimVyleDWSY6/axdO0/temub760n3hnMppZpUg==",
+  "attestations": { "current": true, "previous": [true, true, true] }
+}
