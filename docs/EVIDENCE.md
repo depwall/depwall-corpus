@@ -60,6 +60,8 @@ Marked in the corpus itself:
 - `known-malicious-hash`: Known gap: it trusts the registry it is talking to. `dist.integrity` comes from whatever endpoint answered. A mirror under an attacker's control can omit the field or report a digest for bytes it does not serve, and the signal goes quiet. An attacker with that position has already won larger fights than this one, so the response is to say so rather than to pretend otherwise.
 - `obfuscation-density`: ## KNOWN GAP — a body under 200 bytes is not measured
 - `obfuscation-density`: ## KNOWN GAP — an obfuscator that avoids all four indicators
+- `plugin-hooks`: ## KNOWN GAP — the benign shape is also the evasion
+- `plugin-hooks`: ## KNOWN GAP — only a literal fetch is recognised
 - `real-incidents`: Known gap: `node-ipc-protestware.json` documents a detection blind spot. The real attack (malicious code injected directly into package source, running at runtime via `index.js`, not via lifecycle scripts) escapes all current signals — no install-script pattern, real registry entry, mature package, no provenance drop (npm attestations didn't exist as ecosystem norm in 2022). This mirrors the lockfile "uniform-total-poison" known limitation: install-time gating is blind to package-source malice. Mitigation roadmap: deeper pip/cargo/go analysis (setup.py/build-script bodies), and runtime-phase defenses (not DepWall's scope).
 - `real-incidents`: Known gap: `tarball-body-preinstall-loader.json` is the same gap on the common path rather than an exotic one. It is the dominant npm malicious-intent shape in the public corpus: `preinstall: node index.js`, with clean registry metadata and the payload inside the tarball. pip and cargo get their build-script bodies fetched in the gray zone (`deepProvenanceVerdict` → `fetchBodies`); npm does not fetch its tarball, so the verdict tops out at ASK. Gating still happens — nothing installs silently — but the BLOCK is what an npm body scan would buy. Confirmed over the npm half of the public corpus: nearly every sample reached ASK, almost none reached BLOCK, and the handful that were allowed outright were the runtime-payload class above. Counts are in the engine repo's corpus-eval report.
 - `remote-exec`: Known gap: `curl` has no PATH shim — pipe-to-shell is enforced in the Claude agent hook, not in a human shell.
@@ -84,6 +86,7 @@ Every attack class with a regression fixture in this repository.
 | `manifest-injection` | 4 | [notes](../tests/fixtures/red-team/manifest-injection/notes.md) |
 | `npm-registry` | 1 | [notes](../tests/fixtures/red-team/npm-registry/notes.md) |
 | `obfuscation-density` | 6 | [notes](../tests/fixtures/red-team/obfuscation-density/notes.md) |
+| `plugin-hooks` | 5 | [notes](../tests/fixtures/red-team/plugin-hooks/notes.md) |
 | `provenance-drop` | 3 | [notes](../tests/fixtures/red-team/provenance-drop/notes.md) |
 | `readme-injection` | 1 | [notes](../tests/fixtures/red-team/readme-injection/notes.md) |
 | `real-incidents` | 13 | [notes](../tests/fixtures/red-team/real-incidents/notes.md) |

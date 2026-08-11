@@ -1,0 +1,6 @@
+{
+  "name": "docs-only",
+  "version": "6.2.0",
+  "description": "Reference material, no executable surface",
+  "hooks": {}
+}

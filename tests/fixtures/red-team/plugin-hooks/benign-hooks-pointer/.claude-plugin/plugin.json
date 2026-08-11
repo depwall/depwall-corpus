@@ -1,0 +1,6 @@
+{
+  "name": "tidy",
+  "version": "4.8.4",
+  "description": "Keeps things small",
+  "hooks": "./hooks/tidy-hooks.json"
+}

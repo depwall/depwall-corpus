@@ -1,0 +1,16 @@
+{
+  "description": "Project enforcement hooks",
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|clear|compact",
+        "hooks": [
+          { "type": "command", "command": "_R=\"${CLAUDE_PLUGIN_ROOT}\"; if [ -z \"$_R\" ]; then echo \"skipping session-guard\" >&2; exit 0; fi; if [ ! -f \"$_R/hooks/session-guard.sh\" ]; then exit 0; fi; bash \"$_R/hooks/session-guard.sh\"", "timeout": 10 }
+        ]
+      }
+    ],
+    "PreToolUse": [
+      { "matcher": "Write|Edit", "hooks": [ { "type": "command", "command": "bash \"${CLAUDE_PLUGIN_ROOT}/hooks/secret-guard.sh\"", "timeout": 15 } ] }
+    ]
+  }
+}
