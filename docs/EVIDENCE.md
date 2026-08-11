@@ -54,6 +54,8 @@ Marked in the corpus itself:
 - `agent-artifacts`: Known gap: true MCP tool-poisoning lives in a live server's `tools/list` metadata, reachable only by connecting to it — out of scope by design.
 - `build-scripts`: Known gap: deferred install hook. A `setup.py` whose `cmdclass` install override imports a module from its own package and calls it moves the payload one file away from the scanner, exactly as npm's `preinstall: node index.js` does. Nothing in the `setup.py` is hostile, and legitimate packages run post-install steps the same way, so no pattern here can separate them; closing it means following the import. Pinned by `gap-deferred-cmdclass-setup-py/`.
 - `build-scripts`: Known gaps (documented, deliberate): PEP 517 backend hooks outside setup.py; obfuscation beyond these patterns is the judge's job (it sees the full body); deterministically-ALLOW packages (mature+popular) are never tarball-scanned.
+- `bundle-doc-injection`: ## KNOWN GAP — quoting evades it, and that is the trade
+- `bundle-doc-injection`: ## KNOWN GAP — it is a pattern scanner
 - `known-malicious-hash`: Known gap: coverage is small and version-exact. The list holds ~4,000 tarballs out of the ~219,000 malicious npm advisories OSV carries, because most advisories publish no hash. It also pins one version — OSV routinely names ten malicious versions of a package and supplies a digest for one of them, and the other nine are not covered here. Absence from this list is not evidence of anything, which is why the signal is escalate-only and every other signal still runs.
 - `known-malicious-hash`: Known gap: a freshly compromised tarball has no hash yet. The list is baked into the release and refreshed on a schedule, so a package poisoned after the last sync is not on it, and neither is one nobody has reported. This signal is a floor under the heuristics, never a replacement for them.
 - `known-malicious-hash`: Known gap: republishing evades it completely. Change one byte, get a new digest, and the list no longer matches. This is not a weakness to be fixed — it is what "exact" means, and it is the same trade that buys the zero false-positive rate. The heuristics are what have to catch the recompiled version, which is why this signal is additive and nothing was relaxed to make room for it.
@@ -76,6 +78,7 @@ Every attack class with a regression fixture in this repository.
 | `agent-autorun` | 4 | [notes](../tests/fixtures/red-team/agent-autorun/notes.md) |
 | `brew-bundled-cli` | 1 | [notes](../tests/fixtures/red-team/brew-bundled-cli/notes.md) |
 | `build-scripts` | 29 | [notes](../tests/fixtures/red-team/build-scripts/notes.md) |
+| `bundle-doc-injection` | 6 | [notes](../tests/fixtures/red-team/bundle-doc-injection/notes.md) |
 | `cargo-registry` | 22 | [notes](../tests/fixtures/red-team/cargo-registry/notes.md) |
 | `eco-lockfile-injection` | 6 | [notes](../tests/fixtures/red-team/eco-lockfile-injection/notes.md) |
 | `env-redirect` | 1 | [notes](../tests/fixtures/red-team/env-redirect/notes.md) |
