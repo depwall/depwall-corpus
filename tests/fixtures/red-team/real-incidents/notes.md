@@ -39,17 +39,29 @@ install-time gating is blind to package-source malice.
 Mitigation roadmap: deeper pip/cargo/go analysis (setup.py/build-script
 bodies), and runtime-phase defenses (not DepWall's scope).
 
-**Known gap: `tarball-body-preinstall-loader.json`** is the same gap on the
-common path rather than an exotic one. It is the dominant npm malicious-intent
-shape in the public corpus: `preinstall: node index.js`, with clean registry
-metadata and the payload inside the tarball. pip and cargo get their build-script
-bodies fetched in the gray zone (`deepProvenanceVerdict` → `fetchBodies`); npm
-does not fetch its tarball, so the verdict tops out at ASK. Gating still happens
-— nothing installs silently — but the BLOCK is what an npm body scan would buy.
-Confirmed over the npm half of the public corpus: nearly every sample reached
-ASK, almost none reached BLOCK, and the handful that were allowed outright were
-the runtime-payload class above. Counts are in the engine repo's corpus-eval
-report.
+**Fixture artifact, NOT a product gap: `tarball-body-preinstall-loader.json`
+is ASK because the fixture has no tarball.** It is the dominant npm
+malicious-intent shape in the public corpus: `preinstall: node index.js`, with
+clean registry metadata and the payload inside the tarball.
+
+This entry used to read *"npm does not fetch its tarball, so the verdict tops out
+at ASK."* **That claim is obsolete, and leaving it standing was a defect in its
+own right.** npm bodies have been fetched in the gray zone since PR #84, and the
+scan now also follows the entry point's relative requires one hop (PR #99),
+including through a required directory's own `package.json` `main`. Against a
+real registry this shape reaches BLOCK on a malicious body.
+
+The fixture still resolves to ASK, and that is a property of the FIXTURE: these
+are inert metadata records with no archive attached, so the body-fetch path
+cannot run here at all. The tier in the table is a floor from metadata alone, not
+a statement about what the product does. End-to-end body coverage lives in
+`tests/ecosystems/npm-tarball-body.test.ts` and `tests/ecosystems/pip-deep.test.ts`,
+which drive the real fetch + extract path over real archive layouts.
+
+Kept as a documented case rather than deleted, because the reason for the number
+is the useful part. A security document that leaves a closed gap described as
+open is the same class of error as claiming coverage it does not have — and this
+one survived three releases.
 
 **Known limitation: Mini Shai-Hulud carried VALID SLSA provenance.** The
 malicious versions were signed by a real Sigstore certificate issued to the

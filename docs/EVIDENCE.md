@@ -52,7 +52,6 @@ This is a small, hand-curated set — it demonstrates that the deterministic sig
 Marked in the corpus itself:
 
 - `agent-artifacts`: Known gap: true MCP tool-poisoning lives in a live server's `tools/list` metadata, reachable only by connecting to it — out of scope by design.
-- `build-scripts`: Known gap: deferred install hook. A `setup.py` whose `cmdclass` install override imports a module from its own package and calls it moves the payload one file away from the scanner, exactly as npm's `preinstall: node index.js` does. Nothing in the `setup.py` is hostile, and legitimate packages run post-install steps the same way, so no pattern here can separate them; closing it means following the import. Pinned by `gap-deferred-cmdclass-setup-py/`.
 - `build-scripts`: Known gaps (documented, deliberate): PEP 517 backend hooks outside setup.py; obfuscation beyond these patterns is the judge's job (it sees the full body); deterministically-ALLOW packages (mature+popular) are never tarball-scanned.
 - `bundle-doc-injection`: ## KNOWN GAP — quoting evades it, and that is the trade
 - `bundle-doc-injection`: ## KNOWN GAP — it is a pattern scanner
@@ -65,7 +64,6 @@ Marked in the corpus itself:
 - `plugin-hooks`: ## KNOWN GAP — the benign shape is also the evasion
 - `plugin-hooks`: ## KNOWN GAP — only a literal fetch is recognised
 - `real-incidents`: Known gap: `node-ipc-protestware.json` documents a detection blind spot. The real attack (malicious code injected directly into package source, running at runtime via `index.js`, not via lifecycle scripts) escapes all current signals — no install-script pattern, real registry entry, mature package, no provenance drop (npm attestations didn't exist as ecosystem norm in 2022). This mirrors the lockfile "uniform-total-poison" known limitation: install-time gating is blind to package-source malice. Mitigation roadmap: deeper pip/cargo/go analysis (setup.py/build-script bodies), and runtime-phase defenses (not DepWall's scope).
-- `real-incidents`: Known gap: `tarball-body-preinstall-loader.json` is the same gap on the common path rather than an exotic one. It is the dominant npm malicious-intent shape in the public corpus: `preinstall: node index.js`, with clean registry metadata and the payload inside the tarball. pip and cargo get their build-script bodies fetched in the gray zone (`deepProvenanceVerdict` → `fetchBodies`); npm does not fetch its tarball, so the verdict tops out at ASK. Gating still happens — nothing installs silently — but the BLOCK is what an npm body scan would buy. Confirmed over the npm half of the public corpus: nearly every sample reached ASK, almost none reached BLOCK, and the handful that were allowed outright were the runtime-payload class above. Counts are in the engine repo's corpus-eval report.
 - `remote-exec`: Known gap: `curl` has no PATH shim — pipe-to-shell is enforced in the Claude agent hook, not in a human shell.
 
 ## Corpus census
@@ -77,7 +75,7 @@ Every attack class with a regression fixture in this repository.
 | `agent-artifacts` | 24 | [notes](../tests/fixtures/red-team/agent-artifacts/notes.md) |
 | `agent-autorun` | 4 | [notes](../tests/fixtures/red-team/agent-autorun/notes.md) |
 | `brew-bundled-cli` | 1 | [notes](../tests/fixtures/red-team/brew-bundled-cli/notes.md) |
-| `build-scripts` | 29 | [notes](../tests/fixtures/red-team/build-scripts/notes.md) |
+| `build-scripts` | 34 | [notes](../tests/fixtures/red-team/build-scripts/notes.md) |
 | `bundle-doc-injection` | 6 | [notes](../tests/fixtures/red-team/bundle-doc-injection/notes.md) |
 | `cargo-registry` | 22 | [notes](../tests/fixtures/red-team/cargo-registry/notes.md) |
 | `eco-lockfile-injection` | 6 | [notes](../tests/fixtures/red-team/eco-lockfile-injection/notes.md) |

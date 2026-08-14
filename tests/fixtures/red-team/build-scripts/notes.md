@@ -32,15 +32,75 @@ measurement recorded in the engine repo's corpus-eval report):
 - `benign-platform-wheel-setup-py/` — inspects the platform, then downloads the
   matching prebuilt binary → NO finding (FP guard: platform lookups select an
   ARTIFACT, identity lookups identify a VICTIM)
-- `gap-deferred-cmdclass-setup-py/` — install-command override that imports and
-  calls a project module (`DeepSolid`, `HLLM`) → no finding, asserted clean
+- `exfil-py-deferred-import/` — install-command override that imports and calls a
+  project module (`DeepSolid`, `HLLM`); `setup.py` is asserted CLEAN on its own
+  and the payload sits in `main.py`, reached by following the import one hop →
+  critical → BLOCK
+- `benign-py-deferred-import/` — identical shape with a real post-install helper
+  behind it (reads build config, inspects the platform, spawns `compileall`) →
+  NO finding (FP guard: deferring a post-install step to a module is ordinary
+  packaging, not a tell)
 
-**Known gap: deferred install hook.** A `setup.py` whose `cmdclass` install
-override imports a module from its own package and calls it moves the payload
+**Closed: the deferred install hook.** A `setup.py` whose `cmdclass` install
+override imports a module from its own package and calls it moved the payload
 one file away from the scanner, exactly as npm's `preinstall: node index.js`
-does. Nothing in the `setup.py` is hostile, and legitimate packages run
-post-install steps the same way, so no pattern here can separate them; closing
-it means following the import. Pinned by `gap-deferred-cmdclass-setup-py/`.
+did. Nothing in the `setup.py` is hostile, and legitimate packages run
+post-install steps the same way, so no pattern applied to it could separate
+them — the fix was to read the module, not to widen a regex.
+
+The sdist walk now resolves the modules its build scripts import — `import a.b`,
+`import a, b`, `from a.b import c` — and reads them out of the same decompressed
+archive: one hop, capped at 12 distinct modules. A dotted name resolves to a
+PATH (`mypkg/installer.py`, plus the `__init__.py` a package directory would
+use), which is why the sdist fetch moved from `basename` to `rootRelative`. An
+sdist is rooted at one `<name>-<version>/` directory and setup.py runs with cwd
+there, so a module names exactly one file; basename matching would have read
+`vendor/main.py` in place of the `main.py` the install hook imports — the same
+decoy the npm side already learned about.
+
+There is deliberately NO stdlib denylist. `import os` resolves to candidates that
+do not exist in the sdist, so the walker returns nothing for them, and a package
+that really does ship its own `os.py` is one whose `os.py` should be read. A
+denylist would be one more thing to drift. The cap is 12 rather than npm's 8 for
+the same reason: a real setup.py spends its first few imports on setuptools and
+stdlib before reaching anything interesting.
+
+**What following the import broke, and the measurement that caught it.** The
+Python gates tested co-occurrence anywhere in the body. That was sound while the
+body was always a short single-purpose `setup.py` — and following the imports
+destroyed the premise, because reading `__version__` out of a project module at
+the top of setup.py is one of the most common patterns on PyPI (`dill`, `six`,
+`lxml`, `grpcio-status`, `nodeenv`). The scanner now routinely gets a full
+application file.
+
+`nodeenv` — top-300 on PyPI, a pre-commit dependency — went to **BLOCK** on the
+first version of this change. It calls `urlopen` because downloading a Node
+tarball is its entire purpose, and calls `os.environ.copy()` ~40KB away to build
+a child-process environment: two unrelated statements welded into an
+"exfiltration" gate by file-scale matching. Precisely the `@scarf/scarf` lesson
+that produced `JS_GATE_WINDOW`, restated in Python, and it was found by
+measurement rather than by review — no fixture predicted it.
+
+So the two-armed Python gates are proximity-bounded now (`PY_GATE_WINDOW`,
+1200 — wider than the JS window because a setup.py is written with more vertical
+space). `BODY_SEAM` takes the MAX of the two windows: it had been sized to the JS
+window alone, and leaving it there would have silently re-opened cross-file
+welding for sdists the moment pip started following imports. Pinned by
+`benign-py-far-apart-module/`, whose padding between the two halves is
+load-bearing — shrink it under the window and the fixture stops testing anything.
+
+That fixture also re-taught an old lesson the hard way: its FIRST draft failed
+because its own header comment named both calls 677 characters apart, and a text
+scanner matches prose. `benign-platform-wheel-setup-py/` already avoids naming
+what it does for exactly this reason.
+
+*Measured, before and after.* Top 300 PyPI packages by download, real sdists,
+each downloaded once and scanned both ways: 282 sdists, 123 with a `setup.py`,
+the import hop engaged on **24** of them reading 33 module files (`setuptools`,
+`six`, `lxml`, `pytz`, `versioneer`, `oauthlib`). Before the window: **1 flagged**
+(`nodeenv`, a false positive). After: **0 flagged**, with the same 33 files still
+read — the window removed the false positive without reducing coverage. 10 of 300
+metadata fetches stayed unresolved and are counted rather than dropped.
 
 Two rules were added, both AND-gated so neither fires alone:
 concealed spawn (spawn + encoded command, or spawn + hidden-console flag + an
@@ -235,11 +295,14 @@ BLOCK downgraded to ASK, not a clean pass.
 - **`node .` plus the root `main` field** — pre-existing, and a gap in entry
   point SELECTION rather than in the hop; see the `main`-field note above.
 
-**Still open: the pip twin.** `gap-deferred-cmdclass-setup-py/` is the same
-shape one import away in Python and is NOT closed by this. The sdist walker
-matches on `basename`, so a relative import cannot be resolved to one file the
-way an npm root-relative path can; closing it means teaching that walker paths
-first.
+**The pip twin is now closed too** — see "Closed: the deferred install hook"
+above. It needed the same two things: paths instead of basenames, and a follow
+stage. What does NOT carry over is the npm residual list: Python has no
+computed-specifier equivalent that matters here, because `__import__(name)` and
+`importlib.import_module(name)` with a built-up string are already the
+obfuscation shapes the deterministic rules look at directly, rather than a
+resolution problem. A dotted literal import is the ordinary spelling, and that
+is the one now followed.
 
 **The join seam, and why the hop forced it.** `buildScriptFindings` concatenates
 the bodies it is given before scanning, and the separator used to be a single
